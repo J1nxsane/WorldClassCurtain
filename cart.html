@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>World Class Curtain - Cart</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="icon" href="logoo.png" type="image/png">
+    
+    <style>
+        .hero { position: relative; overflow: hidden; transition: background-image 1s ease-in-out; background-size: cover; background-position: center; }
+        .hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.5); z-index: 1; }
+        .hero h2, .hero p, .hero button { z-index: 2; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); }
+        .hero button:hover { background-color: rgba(26, 27, 75, 0.8); transform: scale(1.05); }
+        nav { position: sticky; top: 0; left: 0; right: 0; z-index: 1000; }
+        .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease-out, transform 0.5s ease-out; }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+        /* Modal styles */
+        .modal-overlay { z-index: 1010; }
+        .modal-content { z-index: 1020; }
+        .hidden { display: none; } /* Ensure hidden class works for sections */
+        .page-section { display: none; }
+        .page-section.active { display: block; }
+    </style>
+
+    <script type="module">
+        import { createClient } from 'https://esm.sh/@supabase/supabase-js'
+
+        const SUPABASE_URL = 'https://xyvqvcfdkvvbagqxygwo.supabase.co'
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh5dnF2Y2Zka3Z2YmFncXh5Z3dvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc3NTAzMjUsImV4cCI6MjA3MzMyNjMyNX0.y9mp2CwTpmBfeu03iQx_2khV2F3SD_xhFTih3WMoMMA'
+
+        const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+        window.supabase = supabase
+    </script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { 'playfair': ['"Playfair Display"', 'serif'], 'poppins': ['Poppins', 'sans-serif'], },
+                    colors: { 'primary': '#1a1b4b', 'secondary': '#e6f3ff', }
+                }
+            }
+        }
+        function toggleMenu() { document.getElementById('mobile-menu').classList.toggle('hidden'); }
+        function smoothScroll(target) { const element = document.querySelector(target); if (element) element.scrollIntoView({ behavior: 'smooth' }); }
+        const images = ['bigi1.jpg', 'bigi2.jpg', 'bigi3.jpg'];
+        let currentIndex = 0;
+        function changeBackground() { const heroSection = document.querySelector('.hero'); currentIndex = (currentIndex + 1) % images.length; heroSection.style.backgroundImage = `url('${images[currentIndex]}')`; }
+        setInterval(changeBackground, 5000);
+        function handleScroll() { const elements = document.querySelectorAll('.fade-in'); const windowHeight = window.innerHeight; elements.forEach(element => { const elementTop = element.getBoundingClientRect().top; if (elementTop < windowHeight - 50) { element.classList.add('visible'); } }); }
+        window.addEventListener('scroll', handleScroll);
+        document.addEventListener('DOMContentLoaded', handleScroll);
+    </script>
+</head>
+<body class="font-poppins">
+    <nav class="bg-white py-4 px-6 md:px-12 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="index.html" class="flex items-center text-2xl font-playfair font-bold text-primary">
+                <img src="logoo.png" alt="World Class Curtain Logo" class="h-10 mr-2">
+                World Class Curtain
+            </a>
+            <div class="md:hidden">
+                <img src="menuuu.png" alt="Menu Button" class="menu-btn cursor-pointer" id="menu-btn" onclick="toggleMenu()">
+            </div>
+            <div class="hidden md:flex space-x-8 items-center">
+                <a href="index.html" class="hover:text-primary">HOME</a>
+                <a href="seemore.html" class="hover:text-primary">MORE</a>
+                <a href="#about" class="hover:text-primary" onclick="smoothScroll('#about')">ABOUT</a>
+                <a href="contact.html" class="hover:text-primary">CONTACT</a>
+                <button id="view-orders-btn" class="hover:text-primary relative">
+                    <i class="fas fa-history text-xl"></i>
+                </button>
+                <button id="view-cart-btn" class="hover:text-primary relative">
+                    <i class="fas fa-shopping-cart text-xl"></i>
+                    <span id="cart-item-count" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                </button>
+            </div>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-white py-4 px-6">
+            <a href="index.html" class="block hover:text-primary">HOME</a>
+            <a href="seemore.html" class="block hover:text-primary">MORE</a>
+            <a href="#about" class="block hover:text-primary" onclick="smoothScroll('#about')">ABOUT</a>
+            <a href="contact.html" class="block hover:text-primary">CONTACT</a>
+        </div>
+    </nav>
+    
+    <main>
+        <section class="hero bg-secondary py-16 md:py-24 page-section active" id="home-section" style="background-image: url('bigi1.jpg');">
+            <div class="container mx-auto px-6 md:px-12 relative z-10">
+                <div class="max-w-2xl text-center md:text-left mx-auto md:mx-0">
+                    <h2 class="text-4xl md:text-5xl font-playfair font-bold text-white mb-4">Curtains That<br/>Reflect your Style</h2>
+                    <p class="text-white mb-8">Explore The Elegance of World - Class<br/>Curtains, where Luxury Meets<br/>Functionality.</p>
+                    <button class="bg-primary text-white px-8 py-3 rounded transition" onclick="window.location.href='seemore.html'">
+                        Explore Now
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-16 bg-white fade-in page-section active" id="products-section">
+            <div class="container mx-auto px-6 md:px-12">
+                <h2 class="text-3xl font-playfair font-bold text-primary text-center mb-4">Popular Choices</h2>
+                <p class="text-center text-gray-600 mb-12">Discover our best-selling curtains loved by customers worldwide. 🤩</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="product-card bg-gray-100 p-4 rounded-lg transform transition-all duration-300 hover:shadow-xl hover:-translate-y-1 flex flex-col" data-product-name="Minimalist Linen Curtain" data-product-price="1200">
+                        <div class="h-64 rounded-lg mb-4 overflow-hidden">
+                            <img src="ctdsgn1.jpg" alt="Minimalist Linen Curtain" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
+                        </div>
+                        <h3 class="font-medium mb-2">Minimalist Linen Curtain</h3>
+                        <p class="text-gray-600 mb-2 text-sm">A simple yet elegant curtain for a modern and clean aesthetic.</p>
+                        <div class="flex-grow"></div> <div class="flex justify-between items-center mt-auto">
+                            <span class="font-bold text-lg">₱1,200</span>
+                            <div class="flex items-center">
+                                <span>4.7</span>
+                                <i class="fas fa-star text-yellow-400 ml-1"></i>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <label for="size-1" class="block text-sm font-medium text-gray-700">Size:</label>
+                            <select id="size-1" name="size-1" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm rounded-md">
+                                <option>Standard (52" W x 84" L)</option>
+                                <option>Long (52" W x 96" L)</option>
+                                <option>Extra-Long (52" W x 108" L)</option>
+                            </select>
+                        </div>
+                        <button class="add-to-cart-btn mt-4 w-full bg-primary text-white py-2 rounded-md hover:bg-opacity-90 transition-colors duration-300 font-semibold">
+                            Add to Cart
+                        </button>
+                    </div>
+
+                    <div class="product-card bg-gray-100 p-4 rounded-lg transform transition-all duration-300 hover:shadow-xl hover:-translate-y-1 flex flex-col" data-product-name="Classic Floral Curtain" data-product-price="1350">
+                        <div class="h-64 rounded-lg mb-4 overflow-hidden">
+                            <img src="ctdsgn2.jpg" alt="Classic Floral Curtain" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
+                        </div>
+                        <h3 class="font-medium mb-2">Classic Floral Curtain</h3>
+                        <p class="text-gray-600 mb-2 text-sm">A timeless floral pattern that brings a touch of nature indoors.</p>
+                        <div class="flex-grow"></div> <div class="flex justify-between items-center mt-auto">
+                            <span class="font-bold text-lg">₱1,350</span>
+                            <div class="flex items-center">
+                                <span>4.9</span>
+                                <i class="fas fa-star text-yellow-400 ml-1"></i>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <label for="size-2" class="block text-sm font-medium text-gray-700">Size:</label>
+                            <select id="size-2" name="size-2" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm rounded-md">
+                                <option>Standard (52" W x 84" L)</option>
+                                <option>Long (52" W x 96" L)</option>
+                                <option>Extra-Long (52" W x 108" L)</option>
+                            </select>
+                        </div>
+                        <button class="add-to-cart-btn mt-4 w-full bg-primary text-white py-2 rounded-md hover:bg-opacity-90 transition-colors duration-300 font-semibold">
+                            Add to Cart
+                        </button>
+                    </div>
+
+                    <div class="product-card bg-gray-100 p-4 rounded-lg transform transition-all duration-300 hover:shadow-xl hover:-translate-y-1 flex flex-col" data-product-name="Geometric Pattern Curtain" data-product-price="1280">
+                        <div class="h-64 rounded-lg mb-4 overflow-hidden">
+                            <img src="ctdsgn3.jpg" alt="Geometric Pattern Curtain" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
+                        </div>
+                        <h3 class="font-medium mb-2">Geometric Pattern Curtain</h3>
+                        <p class="text-gray-600 mb-2 text-sm">A bold geometric design that adds a contemporary flair to your space.</p>
+                        <div class="flex-grow"></div> <div class="flex justify-between items-center mt-auto">
+                            <span class="font-bold text-lg">₱1,280</span>
+                            <div class="flex items-center">
+                                <span>4.8</span>
+                                <i class="fas fa-star text-yellow-400 ml-1"></i>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <label for="size-3" class="block text-sm font-medium text-gray-700">Size:</label>
+                            <select id="size-3" name="size-3" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm rounded-md">
+                                <option>Standard (52" W x 84" L)</option>
+                                <option>Long (52" W x 96" L)</option>
+                                <option>Extra-Long (52" W x 108" L)</option>
+                            </select>
+                        </div>
+                        <button class="add-to-cart-btn mt-4 w-full bg-primary text-white py-2 rounded-md hover:bg-opacity-90 transition-colors duration-300 font-semibold">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-12">
+                    <a href="seemore.html" class="bg-primary text-white px-8 py-3 rounded-md hover:bg-opacity-90 transition-colors duration-300 font-semibold">View All Products</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="my-orders" class="py-16 bg-white page-section">
+            <div class="container mx-auto px-6 md:px-12">
+                <h2 class="text-3xl font-playfair font-bold text-primary text-center mb-8">My Orders</h2>
+                <div id="orders-container" class="space-y-6">
+                    <p id="no-orders-message" class="text-center text-gray-500 hidden">You have no past orders. Go shopping now!🛒</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="login" class="py-16 bg-secondary page-section hidden">
+        </section>
+
+        <section id="user-profile" class="py-16 bg-secondary page-section hidden">
+        </section>
+    </main>
+
+    <footer class="bg-primary text-white py-12 text-center">
+        <p>&copy; 2025 World Class Curtain. All rights reserved.</p>
+    </footer>
+
+    <div id="cart-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center modal-overlay">
+        <div class="bg-white rounded-lg shadow-xl w-full max-w-2xl p-6 modal-content">
+            <div class="flex justify-between items-center border-b pb-4 mb-4">
+                <h2 class="text-2xl font-playfair font-bold text-primary">Your Shopping Cart</h2>
+                <button id="close-cart-btn" class="text-gray-500 hover:text-gray-800">&times;</button>
+            </div>
+            <div id="cart-items-container" class="mb-4 max-h-96 overflow-y-auto">
+                <p class="text-gray-500">Your cart is empty.</p>
+            </div>
+            <div class="border-t pt-4">
+                <div class="flex justify-between mb-2">
+                    <span class="font-medium">Subtotal</span>
+                    <span id="cart-subtotal" class="font-bold">₱0.00</span>
+                </div>
+                <div class="flex justify-between mb-4">
+                    <span class="font-medium">Shipping</span>
+                    <span>₱50.00</span>
+                </div>
+                <div class="flex justify-between text-xl font-bold text-primary">
+                    <span>Total</span>
+                    <span id="cart-total">₱50.00</span>
+                </div>
+                <button id="checkout-btn" class="mt-6 w-full bg-primary text-white py-3 rounded-md hover:bg-opacity-90 transition-colors duration-300 font-semibold">
+                    Proceed to Checkout
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <div id="checkout-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center modal-overlay">
+        <div class="bg-white rounded-lg shadow-xl w-full max-w-2xl p-6 modal-content">
+            <div class="flex justify-between items-center border-b pb-4 mb-4">
+                <h2 class="text-2xl font-playfair font-bold text-primary">Checkout</h2>
+                <button id="close-checkout-btn" class="text-gray-500 hover:text-gray-800">&times;</button>
+            </div>
+            
+            <form id="checkout-form">
+                <h3 class="text-lg font-semibold mb-2">Shipping Information</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div>
+                        <label for="fullName" class="block text-sm font-medium text-gray-700">Full Name</label>
+                        <input type="text" id="fullName" class="mt-1 p-2 w-full border rounded-md" required>
+                    </div>
+                    <div>
+                        <label for="phone" class="block text-sm font-medium text-gray-700">Phone Number</label>
+                        <input type="tel" id="phone" class="mt-1 p-2 w-full border rounded-md" required>
+                    </div>
+                    <div class="md:col-span-2">
+                        <label for="address" class="block text-sm font-medium text-gray-700">Full Address</label>
+                        <input type="text" id="address" class="mt-1 p-2 w-full border rounded-md" placeholder="Street, Barangay, City/Municipality, Province" required>
+                    </div>
+                </div>
+
+                <h3 class="text-lg font-semibold mb-2">Payment Method</h3>
+                <div class="space-y-2 mb-6">
+                    <label class="flex items-center p-3 border rounded-md has-[:checked]:bg-blue-50 has-[:checked]:border-primary">
+                        <input type="radio" name="payment" value="Credit Card" class="h-4 w-4 text-primary focus:ring-primary" checked>
+                        <span class="ml-3 font-medium">Credit / Debit Card</span>
+                    </label>
+                    <label class="flex items-center p-3 border rounded-md has-[:checked]:bg-blue-50 has-[:checked]:border-primary">
+                        <input type="radio" name="payment" value="GCash" class="h-4 w-4 text-primary focus:ring-primary">
+                        <span class="ml-3 font-medium">GCash</span>
+                    </label>
+                    <label class="flex items-center p-3 border rounded-md has-[:checked]:bg-blue-50 has-[:checked]:border-primary">
+                        <input type="radio" name="payment" value="Cash on Delivery" class="h-4 w-4 text-primary focus:ring-primary">
+                        <span class="ml-3 font-medium">Cash on Delivery (COD)</span>
+                    </label>
+                </div>
+
+                <div class="border-t pt-4">
+                    <div class="flex justify-between text-xl font-bold text-primary">
+                        <span>Total to Pay</span>
+                        <span id="checkout-total">₱0.00</span>
+                    </div>
+                    <div class="flex justify-between mt-6 space-x-4">
+                        <button id="back-to-cart-btn" type="button" class="w-1/2 bg-gray-300 text-gray-700 py-3 rounded-md hover:bg-gray-400 transition-colors duration-300 font-semibold">
+                            Back to Cart
+                        </button>
+                        <button type="submit" class="w-1/2 bg-primary text-white py-3 rounded-md hover:bg-opacity-90 transition-colors duration-300 font-semibold">
+                            Place Order
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <script type="module">
+        const supabase = window.supabase;
+
+        const loginSection = document.getElementById('login');
+        const profileSection = document.getElementById('user-profile');
+        const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
+
+        const cartModal = document.getElementById('cart-modal');
+        const checkoutModal = document.getElementById('checkout-modal');
+        const viewCartBtn = document.getElementById('view-cart-btn');
+        const closeCartBtn = document.getElementById('close-cart-btn');
+        const checkoutBtn = document.getElementById('checkout-btn');
+        const closeCheckoutBtn = document.getElementById('close-checkout-btn');
+        const checkoutForm = document.getElementById('checkout-form');
+        const cartItemCount = document.getElementById('cart-item-count');
+        const myOrdersBtn = document.getElementById('view-orders-btn');
+        const myOrdersSection = document.getElementById('my-orders');
+        const productsSection = document.getElementById('products-section');
+        const homeSection = document.getElementById('home-section');
+        const backToCartBtn = document.getElementById('back-to-cart-btn');
+
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll('.page-section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+                section.style.display = 'none';
+            });
+            document.getElementById(sectionId).classList.add('active');
+            document.getElementById(sectionId).style.display = 'block';
+        }
+
+        async function checkUserSession() {
+            const { data: { session } } = await supabase.auth.getSession();
+            if (session && session.user) {
+                updateCartCount();
+            }
+            return session;
+        }
+
+        async function updateCartCount() {
+            const { data: { session } } = await supabase.auth.getSession();
+            if (!session) {
+                cartItemCount.textContent = '0';
+                return;
+            }
+            const { count, error } = await supabase
+                .from('cart')
+                .select('*', { count: 'exact', head: true })
+                .eq('user_id', session.user.id);
+                
+            if (error) {
+                console.error("Error fetching cart count:", error);
+                cartItemCount.textContent = '0';
+            } else {
+                cartItemCount.textContent = count || '0';
+            }
+        }
+
+        async function viewCart() {
+            const { data: { session } } = await supabase.auth.getSession();
+            if (!session) {
+                alert('Please sign in to view your cart.');
+                smoothScroll('#login');
+                return;
+            }
+
+            const { data: cartItems, error } = await supabase
+                .from('cart')
+                .select('*')
+                .eq('user_id', session.user.id);
+
+            if (error) {
+                alert('Could not fetch cart items.');
+                return;
+            }
+
+            const container = document.getElementById('cart-items-container');
+            if (cartItems.length === 0) {
+                container.innerHTML = '<p class="text-gray-500">Your cart is empty.</p>';
+                document.getElementById('cart-subtotal').textContent = '₱0.00';
+                document.getElementById('cart-total').textContent = '₱50.00';
+                checkoutBtn.disabled = true;
+                checkoutBtn.classList.add('opacity-50', 'cursor-not-allowed');
+            } else {
+                container.innerHTML = '';
+                let subtotal = 0;
+                cartItems.forEach(item => {
+                    const itemElement = document.createElement('div');
+                    itemElement.className = 'flex justify-between items-center py-2 border-b';
+                    itemElement.innerHTML = `
+                        <div>
+                            <p class="font-semibold">${item.product_name}</p>
+                            <p class="text-sm text-gray-500">${item.size}</p>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <span class="font-medium">₱${item.price.toFixed(2)}</span>
+                            <button class="remove-from-cart-btn text-red-500 hover:text-red-700 transition" data-id="${item.id}">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </div>
+                    `;
+                    container.appendChild(itemElement);
+                    subtotal += item.price;
+                });
+
+                document.querySelectorAll('.remove-from-cart-btn').forEach(button => {
+                    button.addEventListener('click', handleRemoveFromCart);
+                });
+
+                const shipping = 50.00;
+                const total = subtotal + shipping;
+                
+                document.getElementById('cart-subtotal').textContent = `₱${subtotal.toFixed(2)}`;
+                document.getElementById('cart-total').textContent = `₱${total.toFixed(2)}`;
+                document.getElementById('checkout-total').textContent = `₱${total.toFixed(2)}`;
+                checkoutBtn.disabled = false;
+                checkoutBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+            }
+            cartModal.classList.remove('hidden');
+        }
+        
+        async function handleRemoveFromCart(event) {
+            if (!confirm('Are you sure you want to remove this item?')) {
+                return;
+            }
+
+            const itemId = event.currentTarget.dataset.id;
+            const { error } = await supabase
+                .from('cart')
+                .delete()
+                .eq('id', itemId);
+
+            if (error) {
+                console.error("Error removing item:", error);
+                alert("Sorry, there was an error removing the item.");
+            } else {
+                alert("Item removed from cart!");
+                viewCart(); 
+                updateCartCount(); 
+            }
+        }
+        
+        async function handleAddToCart(event) {
+            const { data: { session } } = await supabase.auth.getSession();
+            if (!session) {
+                alert('Please sign in to add items to your cart.');
+                smoothScroll('#login');
+                return;
+            }
+
+            const button = event.target;
+            const productCard = button.closest('.product-card');
+            const cartItem = {
+                user_id: session.user.id,
+                product_name: productCard.dataset.productName,
+                size: productCard.querySelector('select').value,
+                price: parseFloat(productCard.dataset.productPrice),
+                quantity: 1
+            };
+
+            const { error } = await supabase.from('cart').insert([cartItem]);
+            if (error) {
+                alert('Sorry, there was an error adding the item.');
+            } else {
+                alert(`'${cartItem.product_name}' has been added to your cart!`);
+                updateCartCount();
+            }
+        }
+        
+        function proceedToCheckout() {
+            cartModal.classList.add('hidden');
+            checkoutModal.classList.remove('hidden');
+        }
+
+        async function placeOrder(event) {
+            event.preventDefault();
+
+            const { data: { session } } = await supabase.auth.getSession();
+            if (!session) {
+                alert("Your session has expired. Please log in again.");
+                return;
+            }
+
+            const { data: cartItems, error: cartError } = await supabase
+                .from('cart')
+                .select('product_name, size, price, quantity')
+                .eq('user_id', session.user.id);
+            
+            if (cartError || !cartItems || cartItems.length === 0) {
+                alert("Could not retrieve cart items to place order. Your cart might be empty.");
+                return;
+            }
+
+            const shippingAddressObject = {
+                fullName: document.getElementById('fullName').value,
+                phone: document.getElementById('phone').value,
+                address: document.getElementById('address').value,
+            };
+            const payment_method = document.querySelector('input[name="payment"]:checked').value;
+            const total_price = parseFloat(document.getElementById('checkout-total').textContent.replace('₱', ''));
+
+            const order = {
+                user_id: session.user.id,
+                order_items: JSON.stringify(cartItems),
+                total_price: total_price,
+                shipping_address: JSON.stringify(shippingAddressObject),
+                payment_method: payment_method,
+                status: 'Pending'
+            };
+
+            const { error: orderError } = await supabase.from('orders').insert([order]);
+            
+            if (orderError) {
+                console.error("Error placing order:", orderError);
+                alert("There was a problem placing your order. Please try again.");
+                return;
+            }
+
+            const { error: deleteError } = await supabase
+                .from('cart')
+                .delete()
+                .eq('user_id', session.user.id);
+
+            if (deleteError) {
+                console.error("Error clearing cart after order:", deleteError);
+            }
+            
+            alert('🎉 Order placed successfully! Thank you for your purchase.');
+            checkoutModal.classList.add('hidden');
+            updateCartCount();
+        }
+
+        async function viewMyOrders() {
+            const { data: { session } } = await supabase.auth.getSession();
+            if (!session) {
+                alert('Please sign in to view your orders.');
+                smoothScroll('#login');
+                return;
+            }
+
+            showSection('my-orders');
+
+            const { data: orders, error } = await supabase
+                .from('orders')
+                .select('*')
+                .eq('user_id', session.user.id)
+                .order('created_at', { ascending: false });
+
+            const ordersContainer = document.getElementById('orders-container');
+            const noOrdersMessage = document.getElementById('no-orders-message');
+            ordersContainer.innerHTML = '';
+
+            if (error) {
+                console.error("Error fetching orders:", error);
+                ordersContainer.innerHTML = `<p class="text-center text-red-500">Failed to load orders. Please try again.</p>`;
+                noOrdersMessage.classList.add('hidden');
+            } else if (!orders || orders.length === 0) {
+                noOrdersMessage.classList.remove('hidden');
+            } else {
+                noOrdersMessage.classList.add('hidden');
+                orders.forEach(order => {
+                    const orderDate = new Date(order.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+                    const orderItems = JSON.parse(order.order_items);
+                    const itemsHtml = orderItems.map(item => `
+                        <div class="flex justify-between items-center text-sm text-gray-700">
+                            <span>${item.product_name} (${item.size}) x${item.quantity}</span>
+                            <span>₱${(item.price * item.quantity).toFixed(2)}</span>
+                        </div>
+                    `).join('');
+
+                    const orderCard = document.createElement('div');
+                    orderCard.className = 'bg-gray-100 p-6 rounded-lg shadow-md';
+                    orderCard.innerHTML = `
+                        <div class="flex justify-between items-center mb-4">
+                            <span class="font-bold text-lg text-primary">Order #${order.id}</span>
+                            <span class="text-sm text-gray-500">${orderDate}</span>
+                        </div>
+                        <div class="space-y-2">
+                            ${itemsHtml}
+                        </div>
+                        <div class="border-t border-gray-300 mt-4 pt-4">
+                            <div class="flex justify-between font-semibold">
+                                <span>Status:</span>
+                                <span>${order.status}</span>
+                            </div>
+                            <div class="flex justify-between font-semibold">
+                                <span>Total:</span>
+                                <span>₱${order.total_price.toFixed(2)}</span>
+                            </div>
+                            <div class="mt-2 text-sm text-gray-500">
+                                <p><strong>Shipping to:</strong> ${JSON.parse(order.shipping_address).fullName}, ${JSON.parse(order.shipping_address).address}</p>
+                                <p><strong>Payment via:</strong> ${order.payment_method}</p>
+                            </div>
+                        </div>
+                    `;
+                    ordersContainer.appendChild(orderCard);
+                });
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            checkUserSession();
+            // Initially show the home/products section
+            showSection('home-section');
+            productsSection.style.display = 'block'; // Ensure products section is visible on load
+        });
+        addToCartButtons.forEach(button => button.addEventListener('click', handleAddToCart));
+        
+        viewCartBtn.addEventListener('click', viewCart);
+        closeCartBtn.addEventListener('click', () => cartModal.classList.add('hidden'));
+        checkoutBtn.addEventListener('click', proceedToCheckout);
+
+        closeCheckoutBtn.addEventListener('click', () => checkoutModal.classList.add('hidden'));
+        checkoutForm.addEventListener('submit', placeOrder);
+
+        backToCartBtn.addEventListener('click', () => {
+            checkoutModal.classList.add('hidden');
+            cartModal.classList.remove('hidden');
+            viewCart(); // Re-render the cart to show any updates
+        });
+        // Add event listener for the new "My Orders" button
+        myOrdersBtn.addEventListener('click', viewMyOrders);
+    </script>
+</body>
+</html>

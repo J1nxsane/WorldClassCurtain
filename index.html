@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>World Class Curtain</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="icon" href="logoo.png" type="image/png">
+    
+    <style>
+        .hero { position: relative; overflow: hidden; transition: background-image 1s ease-in-out; background-size: cover; background-position: center; }
+        .hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.5); z-index: 1; }
+        .hero h2, .hero p, .hero button { z-index: 2; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); }
+        nav { position: sticky; top: 0; left: 0; right: 0; z-index: 1000; }
+        .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease-out, transform 0.5s ease-out; }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+    </style>
+
+    <script type="module">
+        import { createClient } from 'https://esm.sh/@supabase/supabase-js'
+        const SUPABASE_URL = 'https://xyvqvcfdkvvbagqxygwo.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh5dnF2Y2Zka3Z2YmFncXh5Z3dvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc3NTAzMjUsImV4cCI6MjA3MzMyNjMyNX0.y9mp2CwTpmBfeu03iQx_2khV2F3SD_xhFTih3WMoMMA';
+        const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        window.supabase = supabase;
+    </script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { 'playfair': ['"Playfair Display"', 'serif'], 'poppins': ['Poppins', 'sans-serif'] },
+                    colors: { 'primary': '#1a1b4b', 'secondary': '#e6f3ff' }
+                }
+            }
+        };
+        function toggleMenu() { document.getElementById('mobile-menu').classList.toggle('hidden'); }
+        const images = ['bigi1.jpg', 'bigi2.jpg', 'bigi3.jpg'];
+        let currentIndex = 0;
+        function changeBackground() {
+            const heroSection = document.querySelector('.hero');
+            if (heroSection) {
+                currentIndex = (currentIndex + 1) % images.length;
+                heroSection.style.backgroundImage = `url('${images[currentIndex]}')`;
+            }
+        }
+        setInterval(changeBackground, 5000);
+        function handleScroll() { const elements = document.querySelectorAll('.fade-in'); const windowHeight = window.innerHeight; elements.forEach(element => { const elementTop = element.getBoundingClientRect().top; if (elementTop < windowHeight - 50) { element.classList.add('visible'); } }); }
+        window.addEventListener('scroll', handleScroll);<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>World Class Curtain</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="icon" href="logoo.png" type="image/png">
+    
+    <style>
+        .hero { position: relative; overflow: hidden; transition: background-image 1s ease-in-out; background-size: cover; background-position: center; }
+        .hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.5); z-index: 1; }
+        .hero h2, .hero p, .hero button { z-index: 2; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); }
+        nav { position: sticky; top: 0; left: 0; right: 0; z-index: 1000; }
+        .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease-out, transform 0.5s ease-out; }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+    </style>
+
+    <script type="module">
+        import { createClient } from 'https://esm.sh/@supabase/supabase-js'
+        const SUPABASE_URL = 'https://xyvqvcfdkvvbagqxygwo.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh5dnF2Y2Zka3Z2YmFncXh5Z3dvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc3NTAzMjUsImV4cCI6MjA3MzMyNjMyNX0.y9mp2CwTpmBfeu03iQx_2khV2F3SD_xhFTih3WMoMMA';
+        const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        window.supabase = supabase;
+    </script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { 'playfair': ['"Playfair Display"', 'serif'], 'poppins': ['Poppins', 'sans-serif'] },
+                    colors: { 'primary': '#1a1b4b', 'secondary': '#e6f3ff' }
+                }
+            }
+        };
+        function toggleMenu() { document.getElementById('mobile-menu').classList.toggle('hidden'); }
+        const images = ['bigi1.jpg', 'bigi2.jpg', 'bigi3.jpg'];
+        let currentIndex = 0;
+        function changeBackground() {
+            const heroSection = document.querySelector('.hero');
+            if (heroSection) {
+                currentIndex = (currentIndex + 1) % images.length;
+                heroSection.style.backgroundImage = `url('${images[currentIndex]}')`;
+            }
+        }
+        setInterval(changeBackground, 5000);
+        function handleScroll() { const elements = document.querySelectorAll('.fade-in'); const windowHeight = window.innerHeight; elements.forEach(element => { const elementTop = element.getBoundingClientRect().top; if (elementTop < windowHeight - 50) { element.classList.add('visible'); } }); }
+        window.addEventListener('scroll', handleScroll);
+        document.addEventListener('DOMContentLoaded', () => { handleScroll(); changeBackground(); });
+    </script>
+</head>
+<body class="font-poppins bg-gray-50">
+    <nav class="bg-white py-4 px-6 md:px-12 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="index.html" class="flex items-center text-2xl font-playfair font-bold text-primary">
+                <img src="logoo.png" alt="World Class Curtain Logo" class="h-10 mr-2">
+                World Class Curtain
+            </a>
+            <div class="md:hidden">
+                <img src="menuuu.png" alt="Menu Button" class="menu-btn cursor-pointer" id="menu-btn" onclick="toggleMenu()">
+            </div>
+            <div class="hidden md:flex space-x-8 items-center">
+                <a href="index.html" class="hover:text-primary font-semibold">HOME</a>
+                <a href="seemore.html" class="hover:text-primary">MORE</a>
+                <a href="contact.html" class="hover:text-primary">CONTACT</a>
+                <div id="auth-links"></div> <!-- Auth links will be injected here -->
+                <a href="cart.html" class="hover:text-primary relative">
+                    <i class="fas fa-shopping-cart text-xl"></i>
+                    <span id="cart-item-count" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                </a>
+            </div>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-white py-4 px-6">
+            <a href="index.html" class="block hover:text-primary py-2">HOME</a>
+            <a href="seemore.html" class="block hover:text-primary py-2">MORE</a>
+            <a href="contact.html" class="block hover:text-primary py-2">CONTACT</a>
+            <div id="mobile-auth-links"></div> <!-- Mobile auth links -->
+        </div>
+    </nav>
+    
+    <section class="hero bg-secondary py-16 md:py-24" style="background-image: url('bigi1.jpg');">
+        <div class="container mx-auto px-6 md:px-12 relative z-10">
+            <div class="max-w-2xl text-center md:text-left mx-auto md:mx-0">
+                <h2 class="text-4xl md:text-5xl font-playfair font-bold text-white mb-4">Curtains That<br/>Reflect your Style</h2>
+                <p class="text-white mb-8">Explore The Elegance of World - Class<br/>Curtains, where Luxury Meets<br/>Functionality.</p>
+                <button class="bg-primary text-white px-8 py-3 rounded transition" onclick="window.location.href='seemore.html'">
+                    Explore Now
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- USER WELCOME SECTION (DYNAMIC) -->
+    <section id="user-welcome" class="hidden py-8 bg-secondary fade-in text-center">
+         <h2 class="text-2xl font-playfair font-bold text-primary">Welcome Back!</h2>
+         <p id="user-email-display" class="text-gray-600"></p>
+    </section>
+
+    <section class="py-16 bg-white fade-in">
+        <div class="container mx-auto px-6 md:px-12">
+            <h2 class="text-3xl font-playfair font-bold text-primary text-center mb-4">Popular Choices</h2>
+            <p class="text-center text-gray-600 mb-12">Discover our best-selling curtains loved by customers worldwide. 🤩</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Product cards remain the same -->
+                <div class="product-card bg-gray-100 p-4 rounded-lg shadow-sm hover:shadow-xl hover:-translate-y-1 flex flex-col transition-all duration-300" data-product-name="Minimalist Linen Curtain" data-product-price="1200">
+                    <div class="h-64 rounded-lg mb-4 overflow-hidden"><img src="ctdsgn1.jpg" alt="Minimalist Linen Curtain" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500"></div>
+                    <h3 class="font-medium mb-2">Minimalist Linen Curtain</h3>
+                    <p class="text-gray-600 mb-2 text-sm flex-grow">A simple yet elegant curtain for a modern and clean aesthetic.</p>
+                    <div class="flex justify-between items-center mt-2"><span class="font-bold text-lg">₱1,200</span><div class="flex items-center"><span>4.7</span><i class="fas fa-star text-yellow-400 ml-1"></i></div></div>
+                    <div class="mt-4"><label for="size-1" class="block text-sm font-medium text-gray-700">Size:</label><select id="size-1" class="mt-1 block w-full pl-3 pr-10 py-2 border-gray-300 rounded-md"><option>Standard (52" W x 84" L)</option><option>Long (52" W x 96" L)</option><option>Extra-Long (52" W x 108" L)</option></select></div>
+                    <button class="add-to-cart-btn mt-4 w-full bg-primary text-white py-2 rounded-md hover:bg-opacity-90 font-semibold transition-colors">Add to Cart</button>
+                </div>
+                <div class="product-card bg-gray-100 p-4 rounded-lg shadow-sm hover:shadow-xl hover:-translate-y-1 flex flex-col transition-all duration-300" data-product-name="Classic Floral Curtain" data-product-price="1350">
+                    <div class="h-64 rounded-lg mb-4 overflow-hidden"><img src="ctdsgn2.jpg" alt="Classic Floral Curtain" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500"></div>
+                    <h3 class="font-medium mb-2">Classic Floral Curtain</h3>
+                    <p class="text-gray-600 mb-2 text-sm flex-grow">A timeless floral pattern that brings a touch of nature indoors.</p>
+                    <div class="flex justify-between items-center mt-2"><span class="font-bold text-lg">₱1,350</span><div class="flex items-center"><span>4.9</span><i class="fas fa-star text-yellow-400 ml-1"></i></div></div>
+                    <div class="mt-4"><label for="size-2" class="block text-sm font-medium text-gray-700">Size:</label><select id="size-2" class="mt-1 block w-full pl-3 pr-10 py-2 border-gray-300 rounded-md"><option>Standard (52" W x 84" L)</option><option>Long (52" W x 96" L)</option><option>Extra-Long (52" W x 108" L)</option></select></div>
+                    <button class="add-to-cart-btn mt-4 w-full bg-primary text-white py-2 rounded-md hover:bg-opacity-90 font-semibold transition-colors">Add to Cart</button>
+                </div>
+                <div class="product-card bg-gray-100 p-4 rounded-lg shadow-sm hover:shadow-xl hover:-translate-y-1 flex flex-col transition-all duration-300" data-product-name="Geometric Pattern Curtain" data-product-price="1280">
+                    <div class="h-64 rounded-lg mb-4 overflow-hidden"><img src="ctdsgn3.jpg" alt="Geometric Pattern Curtain" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500"></div>
+                    <h3 class="font-medium mb-2">Geometric Pattern Curtain</h3>
+                    <p class="text-gray-600 mb-2 text-sm flex-grow">A bold geometric design that adds a contemporary flair to your space.</p>
+                    <div class="flex justify-between items-center mt-2"><span class="font-bold text-lg">₱1,280</span><div class="flex items-center"><span>4.8</span><i class="fas fa-star text-yellow-400 ml-1"></i></div></div>
+                    <div class="mt-4"><label for="size-3" class="block text-sm font-medium text-gray-700">Size:</label><select id="size-3" class="mt-1 block w-full pl-3 pr-10 py-2 border-gray-300 rounded-md"><option>Standard (52" W x 84" L)</option><option>Long (52" W x 96" L)</option><option>Extra-Long (52" W x 108" L)</option></select></div>
+                    <button class="add-to-cart-btn mt-4 w-full bg-primary text-white py-2 rounded-md hover:bg-opacity-90 font-semibold transition-colors">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-primary text-white py-12 text-center">
+        <p>&copy; 2025 World Class Curtain. All rights reserved.</p>
+    </footer>
+
+    <script type="module">
+        const supabase = window.supabase;
+
+        // --- DOM Selectors ---
+        const authLinksContainer = document.getElementById('auth-links');
+        const mobileAuthLinksContainer = document.getElementById('mobile-auth-links');
+        const userWelcomeSection = document.getElementById('user-welcome');
+        const userEmailDisplay = document.getElementById('user-email-display');
+        const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
+        const cartItemCount = document.getElementById('cart-item-count');
+
+        // --- Authentication ---
+        async function checkUserSession() {
+            const { data: { session } } = await supabase.auth.getSession();
+            updateUIAfterAuth(session);
+            updateCartCount(session);
+        }
+
+        function updateUIAfterAuth(session) {
+            authLinksContainer.innerHTML = ''; // Clear previous links
+            mobileAuthLinksContainer.innerHTML = '';
+
+            if (session && session.user) {
+                // User is logged in
+                userWelcomeSection.classList.remove('hidden');
+                userEmailDisplay.textContent = `Signed in as: ${session.user.email}`;
+
+                const desktopLinks = `
+                    <a href="profile.html" class="hover:text-primary font-semibold">PROFILE</a>
+                    <button id="signout-btn" class="hover:text-primary font-semibold">SIGN OUT</button>
+                `;
+                const mobileLinks = `
+                    <a href="profile.html" class="block hover:text-primary py-2">PROFILE</a>
+                    <button id="mobile-signout-btn" class="block hover:text-primary py-2 w-full text-left">SIGN OUT</button>
+                `;
+                authLinksContainer.innerHTML = desktopLinks;
+                mobileAuthLinksContainer.innerHTML = mobileLinks;
+                
+                document.getElementById('signout-btn').addEventListener('click', handleSignOut);
+                document.getElementById('mobile-signout-btn').addEventListener('click', handleSignOut);
+
+            } else {
+                // User is not logged in
+                userWelcomeSection.classList.add('hidden');
+                const desktopLinks = `<a href="login.html" class="hover:text-primary font-semibold">SIGN IN</a>`;
+                const mobileLinks = `<a href="login.html" class="block hover:text-primary py-2">SIGN IN</a>`;
+                authLinksContainer.innerHTML = desktopLinks;
+                mobileAuthLinksContainer.innerHTML = mobileLinks;
+            }
+        }
+
+        async function handleSignOut() {
+            await supabase.auth.signOut();
+            window.location.reload();
+        }
+        
+        // --- Cart Logic ---
+        async function updateCartCount(session) {
+            if (!session) {
+                cartItemCount.textContent = '0';
+                return;
+            }
+            const { count, error } = await supabase
+                .from('cart')
+                .select('*', { count: 'exact', head: true })
+                .eq('user_id', session.user.id);
+            
+            cartItemCount.textContent = error ? '0' : (count || '0');
+        }
+
+        async function handleAddToCart(event) {
+            const { data: { session } } = await supabase.auth.getSession();
+            if (!session) {
+                alert('Please sign in to add items to your cart.');
+                window.location.href = 'login.html'; // Redirect to login page
+                return;
+            }
+
+            const productCard = event.target.closest('.product-card');
+            const cartItem = {
+                user_id: session.user.id,
+                product_name: productCard.dataset.productName,
+                size: productCard.querySelector('select').value,
+                price: parseFloat(productCard.dataset.productPrice),
+                quantity: 1
+            };
+
+            const { error } = await supabase.from('cart').insert([cartItem]);
+            if (error) {
+                alert('Sorry, there was an error adding the item.');
+            } else {
+                alert(`'${cartItem.product_name}' has been added to your cart!`);
+                updateCartCount(session);
+            }
+        }
+
+        // --- Event Listeners ---
+        document.addEventListener('DOMContentLoaded', checkUserSession);
+        addToCartButtons.forEach(button => button.addEventListener('click', handleAddToCart));
+    </script>
+</body>
+</html>
+
+        document.addEventListener('DOMContentLoaded', () => { handleScroll(); changeBackground(); });
+    </script>
+</head>
+<body class="font-poppins bg-gray-50">
+    <nav class="bg-white py-4 px-6 md:px-12 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="index.html" class="flex items-center text-2xl font-playfair font-bold text-primary">
+                <img src="logoo.png" alt="World Class Curtain Logo" class="h-10 mr-2">
+                World Class Curtain
+            </a>
+            <div class="md:hidden">
+                <img src="menuuu.png" alt="Menu Button" class="menu-btn cursor-pointer" id="menu-btn" onclick="toggleMenu()">
+            </div>
+            <div class="hidden md:flex space-x-8 items-center">
+                <a href="index.html" class="hover:text-primary font-semibold">HOME</a>
+                <a href="seemore.html" class="hover:text-primary">MORE</a>
+                <a href="contact.html" class="hover:text-primary">CONTACT</a>
+                <div id="auth-links"></div> <!-- Auth links will be injected here -->
+                <a href="cart.html" class="hover:text-primary relative">
+                    <i class="fas fa-shopping-cart text-xl"></i>
+                    <span id="cart-item-count" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                </a>
+            </div>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-white py-4 px-6">
+            <a href="index.html" class="block hover:text-primary py-2">HOME</a>
+            <a href="seemore.html" class="block hover:text-primary py-2">MORE</a>
+            <a href="contact.html" class="block hover:text-primary py-2">CONTACT</a>
+            <div id="mobile-auth-links"></div> <!-- Mobile auth links -->
+        </div>
+    </nav>
+    
+    <section class="hero bg-secondary py-16 md:py-24" style="background-image: url('bigi1.jpg');">
+        <div class="container mx-auto px-6 md:px-12 relative z-10">
+            <div class="max-w-2xl text-center md:text-left mx-auto md:mx-0">
+                <h2 class="text-4xl md:text-5xl font-playfair font-bold text-white mb-4">Curtains That<br/>Reflect your Style</h2>
+                <p class="text-white mb-8">Explore The Elegance of World - Class<br/>Curtains, where Luxury Meets<br/>Functionality.</p>
+                <button class="bg-primary text-white px-8 py-3 rounded transition" onclick="window.location.href='seemore.html'">
+                    Explore Now
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- USER WELCOME SECTION (DYNAMIC) -->
+    <section id="user-welcome" class="hidden py-8 bg-secondary fade-in text-center">
+         <h2 class="text-2xl font-playfair font-bold text-primary">Welcome Back!</h2>
+         <p id="user-email-display" class="text-gray-600"></p>
+    </section>
+
+    <section class="py-16 bg-white fade-in">
+        <div class="container mx-auto px-6 md:px-12">
+            <h2 class="text-3xl font-playfair font-bold text-primary text-center mb-4">Popular Choices</h2>
+            <p class="text-center text-gray-600 mb-12">Discover our best-selling curtains loved by customers worldwide. 🤩</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Product cards remain the same -->
+                <div class="product-card bg-gray-100 p-4 rounded-lg shadow-sm hover:shadow-xl hover:-translate-y-1 flex flex-col transition-all duration-300" data-product-name="Minimalist Linen Curtain" data-product-price="1200">
+                    <div class="h-64 rounded-lg mb-4 overflow-hidden"><img src="ctdsgn1.jpg" alt="Minimalist Linen Curtain" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500"></div>
+                    <h3 class="font-medium mb-2">Minimalist Linen Curtain</h3>
+                    <p class="text-gray-600 mb-2 text-sm flex-grow">A simple yet elegant curtain for a modern and clean aesthetic.</p>
+                    <div class="flex justify-between items-center mt-2"><span class="font-bold text-lg">₱1,200</span><div class="flex items-center"><span>4.7</span><i class="fas fa-star text-yellow-400 ml-1"></i></div></div>
+                    <div class="mt-4"><label for="size-1" class="block text-sm font-medium text-gray-700">Size:</label><select id="size-1" class="mt-1 block w-full pl-3 pr-10 py-2 border-gray-300 rounded-md"><option>Standard (52" W x 84" L)</option><option>Long (52" W x 96" L)</option><option>Extra-Long (52" W x 108" L)</option></select></div>
+                    <button class="add-to-cart-btn mt-4 w-full bg-primary text-white py-2 rounded-md hover:bg-opacity-90 font-semibold transition-colors">Add to Cart</button>
+                </div>
+                <div class="product-card bg-gray-100 p-4 rounded-lg shadow-sm hover:shadow-xl hover:-translate-y-1 flex flex-col transition-all duration-300" data-product-name="Classic Floral Curtain" data-product-price="1350">
+                    <div class="h-64 rounded-lg mb-4 overflow-hidden"><img src="ctdsgn2.jpg" alt="Classic Floral Curtain" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500"></div>
+                    <h3 class="font-medium mb-2">Classic Floral Curtain</h3>
+                    <p class="text-gray-600 mb-2 text-sm flex-grow">A timeless floral pattern that brings a touch of nature indoors.</p>
+                    <div class="flex justify-between items-center mt-2"><span class="font-bold text-lg">₱1,350</span><div class="flex items-center"><span>4.9</span><i class="fas fa-star text-yellow-400 ml-1"></i></div></div>
+                    <div class="mt-4"><label for="size-2" class="block text-sm font-medium text-gray-700">Size:</label><select id="size-2" class="mt-1 block w-full pl-3 pr-10 py-2 border-gray-300 rounded-md"><option>Standard (52" W x 84" L)</option><option>Long (52" W x 96" L)</option><option>Extra-Long (52" W x 108" L)</option></select></div>
+                    <button class="add-to-cart-btn mt-4 w-full bg-primary text-white py-2 rounded-md hover:bg-opacity-90 font-semibold transition-colors">Add to Cart</button>
+                </div>
+                <div class="product-card bg-gray-100 p-4 rounded-lg shadow-sm hover:shadow-xl hover:-translate-y-1 flex flex-col transition-all duration-300" data-product-name="Geometric Pattern Curtain" data-product-price="1280">
+                    <div class="h-64 rounded-lg mb-4 overflow-hidden"><img src="ctdsgn3.jpg" alt="Geometric Pattern Curtain" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500"></div>
+                    <h3 class="font-medium mb-2">Geometric Pattern Curtain</h3>
+                    <p class="text-gray-600 mb-2 text-sm flex-grow">A bold geometric design that adds a contemporary flair to your space.</p>
+                    <div class="flex justify-between items-center mt-2"><span class="font-bold text-lg">₱1,280</span><div class="flex items-center"><span>4.8</span><i class="fas fa-star text-yellow-400 ml-1"></i></div></div>
+                    <div class="mt-4"><label for="size-3" class="block text-sm font-medium text-gray-700">Size:</label><select id="size-3" class="mt-1 block w-full pl-3 pr-10 py-2 border-gray-300 rounded-md"><option>Standard (52" W x 84" L)</option><option>Long (52" W x 96" L)</option><option>Extra-Long (52" W x 108" L)</option></select></div>
+                    <button class="add-to-cart-btn mt-4 w-full bg-primary text-white py-2 rounded-md hover:bg-opacity-90 font-semibold transition-colors">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-primary text-white py-12 text-center">
+        <p>&copy; 2025 World Class Curtain. All rights reserved.</p>
+    </footer>
+
+    <script type="module">
+        const supabase = window.supabase;
+
+        // --- DOM Selectors ---
+        const authLinksContainer = document.getElementById('auth-links');
+        const mobileAuthLinksContainer = document.getElementById('mobile-auth-links');
+        const userWelcomeSection = document.getElementById('user-welcome');
+        const userEmailDisplay = document.getElementById('user-email-display');
+        const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
+        const cartItemCount = document.getElementById('cart-item-count');
+
+        // --- Authentication ---
+        async function checkUserSession() {
+            const { data: { session } } = await supabase.auth.getSession();
+            updateUIAfterAuth(session);
+            updateCartCount(session);
+        }
+
+        function updateUIAfterAuth(session) {
+            authLinksContainer.innerHTML = ''; // Clear previous links
+            mobileAuthLinksContainer.innerHTML = '';
+
+            if (session && session.user) {
+                // User is logged in
+                userWelcomeSection.classList.remove('hidden');
+                userEmailDisplay.textContent = `Signed in as: ${session.user.email}`;
+
+                const desktopLinks = `
+                    <a href="profile.html" class="hover:text-primary font-semibold">PROFILE</a>
+                    <button id="signout-btn" class="hover:text-primary font-semibold">SIGN OUT</button>
+                `;
+                const mobileLinks = `
+                    <a href="profile.html" class="block hover:text-primary py-2">PROFILE</a>
+                    <button id="mobile-signout-btn" class="block hover:text-primary py-2 w-full text-left">SIGN OUT</button>
+                `;
+                authLinksContainer.innerHTML = desktopLinks;
+                mobileAuthLinksContainer.innerHTML = mobileLinks;
+                
+                document.getElementById('signout-btn').addEventListener('click', handleSignOut);
+                document.getElementById('mobile-signout-btn').addEventListener('click', handleSignOut);
+
+            } else {
+                // User is not logged in
+                userWelcomeSection.classList.add('hidden');
+                const desktopLinks = `<a href="login.html" class="hover:text-primary font-semibold">SIGN IN</a>`;
+                const mobileLinks = `<a href="login.html" class="block hover:text-primary py-2">SIGN IN</a>`;
+                authLinksContainer.innerHTML = desktopLinks;
+                mobileAuthLinksContainer.innerHTML = mobileLinks;
+            }
+        }
+
+        async function handleSignOut() {
+            await supabase.auth.signOut();
+            window.location.reload();
+        }
+        
+        // --- Cart Logic ---
+        async function updateCartCount(session) {
+            if (!session) {
+                cartItemCount.textContent = '0';
+                return;
+            }
+            const { count, error } = await supabase
+                .from('cart')
+                .select('*', { count: 'exact', head: true })
+                .eq('user_id', session.user.id);
+            
+            cartItemCount.textContent = error ? '0' : (count || '0');
+        }
+
+        async function handleAddToCart(event) {
+            const { data: { session } } = await supabase.auth.getSession();
+            if (!session) {
+                alert('Please sign in to add items to your cart.');
+                window.location.href = 'login.html'; // Redirect to login page
+                return;
+            }
+
+            const productCard = event.target.closest('.product-card');
+            const cartItem = {
+                user_id: session.user.id,
+                product_name: productCard.dataset.productName,
+                size: productCard.querySelector('select').value,
+                price: parseFloat(productCard.dataset.productPrice),
+                quantity: 1
+            };
+
+            const { error } = await supabase.from('cart').insert([cartItem]);
+            if (error) {
+                alert('Sorry, there was an error adding the item.');
+            } else {
+                alert(`'${cartItem.product_name}' has been added to your cart!`);
+                updateCartCount(session);
+            }
+        }
+
+        // --- Event Listeners ---
+        document.addEventListener('DOMContentLoaded', checkUserSession);
+        addToCartButtons.forEach(button => button.addEventListener('click', handleAddToCart));
+    </script>
+</body>
+</html>
