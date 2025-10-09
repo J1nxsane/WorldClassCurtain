@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>World Class Curtain</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="icon" href="logoo.png" type="image/png">
+    
+    <style>
+        /* Hero Section Styles */
+        .hero {
+            position: sticky;
+            overflow: hidden;
+            transition: background-image 1s ease-in-out; 
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5); 
+            z-index: 1;
+        }
+
+        .hero h2, .hero p, .hero button {
+            z-index: 2; 
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); 
+        }
+
+        .hero button {
+            transition: background-color 0.3s ease, transform 0.3s ease; 
+        }
+
+        .hero button:hover {
+            background-color: rgba(26, 27, 75, 0.8); 
+            transform: scale(1.05); 
+        }
+
+        /* Fixed Navigation Styles */
+        nav {
+            position: sticky; 
+            top: 0; 
+            left: 0; 
+            right: 0; 
+            z-index: 10; 
+        }
+        
+        /* Product Card Styles for consistency */
+        .product-card {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+    </style>
+
+    <script type="module">
+        // SUPABASE INTEGRATION: Must be included for cart/auth functionality
+        import { createClient } from 'https://esm.sh/@supabase/supabase-js'
+        // NOTE: Replace with actual keys in a real application, these are placeholders
+        const SUPABASE_URL = 'https://xyvqvcfdkvvbagqxygwo.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh5dnF2Y2Zka3Z2YmFncXh5Z3dvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc3NTAzMjUsImV4cCI6MjA3MzMyNjMyNX0.y9mp2CwTpmBfeu03iQx_2khV2F3SD_xhFTih3WMoMMA';
+        const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        window.supabase = supabase;
+
+        // This script is placed in the head to ensure the Supabase client is available quickly
+    </script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'playfair': ['"Playfair Display"', 'serif'],
+                        'poppins': ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        'primary': '#1a1b4b',
+                        'secondary': '#e6f3ff',
+                    }
+                }
+            }
+        }
+
+        function toggleMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Carousel functionality for hero section
+        const images = [
+            'bigi1.jpg', 'bigi2.jpg', 'bigi3.jpg'
+        ];
+        let currentIndex = 0;
+
+        function changeBackground() {
+            const heroSection = document.querySelector('.hero');
+            if (heroSection) {
+                currentIndex = (currentIndex + 1) % images.length; 
+                heroSection.style.backgroundImage = `url('${images[currentIndex]}')`;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            changeBackground(); // Initialize the background image
+            setInterval(changeBackground, 5000); // Start the rotation
+        });
+    </script>
+</head>
+<body class="font-poppins">
+    <nav class="bg-white py-4 px-6 md:px-12 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="index.html" class="flex items-center text-2xl font-playfair font-bold text-primary">
+                <img src="logoo.png" alt="World Class Curtain Logo" class="h-10 mr-2">
+                World Class Curtain
+            </a>
+            <div class="md:hidden">
+                <img src="menuuu.png" alt=" Menu Button" class="menu-btn cursor-pointer" id="menu-btn" onclick="toggleMenu()">
+            </div>
+            <div class="hidden md:flex space-x-8 items-center">
+                <a href="index.html" class="hover:text-primary">HOME</a>
+                <a href="seemore.html" class="hover:text-primary">MORE</a>
+                <a href="index.html" class="hover:text-primary">ABOUT</a>
+                <a href="contact.html" class="hover:text-primary">CONTACT</a>
+                <a href="developers.html" class="hover:text-primary">DEVELOPERS</a>
+                <div id="auth-links"></div>
+                <a href="cart.html" class="hover:text-primary relative">
+                    <i class="fas fa-shopping-cart text-xl"></i>
+                    <span id="cart-item-count" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                </a>
+            </div>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-white py-4 px-6">
+            <a href="index.html" class="block hover:text-primary py-2">HOME</a>
+            <a href="seemore.html" class="block hover:text-primary py-2">MORE</a>
+            <a href="index.html" class="block hover:text-primary py-2">ABOUT</a>
+            <a href="contact.html" class="block hover:text-primary py-2">CONTACT</a>
+            <a href="developers.html" class="block hover:text-primary py-2">DEVELOPERS</a>
+            <div id="mobile-auth-links"></div>
+        </div>
+    </nav>
+
+    <section class="hero bg-secondary py-16 md:py-24 bg-cover bg-center" style="background-image: url('bigi1.jpg');">
+        <div class="container mx-auto px-6 md:px-12">
+            <div class="max-w-2xl relative z-10">
+                <h2 class="text-4xl md:text-5xl font-playfair font-bold text-yellow-500 mb-4">Curtains That<br/>Reflect your Style</h2>
+                <p class="text-yellow-500 mb-8">Explore The Elegance of World - Class<br/>Curtains, where Luxury Meets<br/>Functionality.</p>
+                <button class="bg-primary text-white px-8 py-3 rounded hover:bg-opacity-90 transition" onclick="window.location.href='seemore.html'">
+                    Explore Now
+                </button>
+            </div>
+        </div>
+    </section>
+    
+    <section class="py-16">
+        <div class="container mx-auto px-6 md:px-12">
+            <h2 class="text-3xl font-playfair font-bold text-primary text-center mb-4">More Products</h2>
+            <p class="text-center text-gray- 600 mb-12">Explore our extended collection of curtains that suit every style and preference. Click 'Add to Cart' to start your order!</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="product-card bg-gray-100 p-4 rounded-lg transform transition-all duration-300 hover:shadow-xl hover:-translate-y-1" 
+                     data-product-name="Chic Patterned Curtain" data-product-price="1450">
+                    <div>
+                        <div class="h-64 rounded-lg mb-4 overflow-hidden">
+                            <img src="ctdsgn4.jpg" alt="Chic Curtain" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
+                        </div>
+                        <h3 class="font-medium mb-2">Chic Patterned Curtain</h3>
+                        <p class="text-gray-600 mb-2 text-sm flex-grow">A stylish patterned curtain that adds a modern touch to your living space.</p>
+                        <div class="flex justify-between items-center mt-2">
+                            <span class="font-bold text-lg">₱ 1,450</span>
+                            <div class="flex items-center"><span>4.5</span><i class="fas fa-star text-yellow-400 ml-1"></i></div>
+                        </div>
+                        <div class="mt-4">
+                            <label for="size-1" class="block text-sm font-medium text-gray-700">Size:</label>
+                            <select id="size-1" class="mt-1 block w-full pl-3 pr-10 py-2 border-gray-300 rounded-md">
+                                <option>Standard (52" W x 84" L)</option><option>Long (52" W x 96" L)</option><option>Extra-Long (52" W x 108" L)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button class="add-to-cart-btn mt-4 w-full bg-primary text-white py-2 rounded-md hover:bg-opacity-90 font-semibold transition-colors">Add to Cart</button>
+                </div>
+
+                <div class="product-card bg-gray-100 p-4 rounded-lg transform transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
+                     data-product-name="Elegant Sheer Curtain" data-product-price="1260">
+                    <div>
+                        <div class="h-64 rounded-lg mb-4 overflow-hidden">
+                            <img src="ctdsgn5.jpg" alt="Elegant Sheer Curtain" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
+                        </div>
+                        <h3 class="font-medium mb-2">Elegant Sheer Curtain</h3>
+                        <p class="text-gray-600 mb-2 text-sm flex-grow">A delicate sheer curtain that allows natural light to filter through beautifully.</p>
+                        <div class="flex justify-between items-center mt-2">
+                            <span class="font-bold text-lg">₱ 1,260</span>
+                            <div class="flex items-center"><span>4.8</span><i class="fas fa-star text-yellow-400 ml-1"></i></div>
+                        </div>
+                        <div class="mt-4">
+                            <label for="size-2" class="block text-sm font-medium text-gray-700">Size:</label>
+                            <select id="size-2" class="mt-1 block w-full pl-3 pr-10 py-2 border-gray-300 rounded-md">
+                                <option>Standard (52" W x 84" L)</option><option>Long (52" W x 96" L)</option><option>Extra-Long (52" W x 108" L)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button class="add-to-cart-btn mt-4 w-full bg-primary text-white py-2 rounded-md hover:bg-opacity-90 font-semibold transition-colors">Add to Cart</button>
+                </div>
+
+                <div class="product-card bg-gray-100 p-4 rounded-lg transform transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
+                     data-product-name="Luxury Blackout Curtain" data-product-price="1320">
+                    <div>
+                        <div class="h-64 rounded-lg mb-4 overflow-hidden">
+                            <img src="ctdsgn6.jpg" alt="Luxury Blackout Curtain" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
+                        </div>
+                        <h3 class="font-medium mb-2">Luxury Blackout Curtain</h3>
+                        <p class="text-gray-600 mb-2 text-sm flex-grow">A premium blackout curtain that provides complete privacy and light control.</p>
+                        <div class="flex justify-between items-center mt-2">
+                            <span class="font-bold text-lg">₱ 1,320</span>
+                            <div class="flex items-center"><span>5.0</span><i class="fas fa-star text-yellow-400 ml-1"></i></div>
+                        </div>
+                        <div class="mt-4">
+                            <label for="size-3" class="block text-sm font-medium text-gray-700">Size:</label>
+                            <select id="size-3" class="mt-1 block w-full pl-3 pr-10 py-2 border-gray-300 rounded-md">
+                                <option>Standard (52" W x 84" L)</option><option>Long (52" W x 96" L)</option><option>Extra-Long (52" W x 108" L)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button class="add-to-cart-btn mt-4 w-full bg-primary text-white py-2 rounded-md hover:bg-opacity-90 font-semibold transition-colors">Add to Cart</button>
+                </div>
+
+                <div class="product-card bg-gray-100 p-4 rounded-lg transform transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
+                     data-product-name="Modern Geometric Curtain" data-product-price="1250">
+                    <div>
+                        <div class="h-64 rounded-lg mb-4 overflow-hidden">
+                            <img src="ctdsgn7.jpg" alt="Modern Geometric Curtain" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
+                        </div>
+                        <h3 class="font-medium mb-2">Modern Geometric Curtain</h3>
+                        <p class="text-gray-600 mb-2 text-sm flex-grow">A contemporary geometric design that enhances your decor.</p>
+                        <div class="flex justify-between items-center mt-2">
+                            <span class="font-bold text-lg">₱ 1,250</span>
+                            <div class="flex items-center"><span>4.7</span><i class="fas fa-star text-yellow-400 ml-1"></i></div>
+                        </div>
+                        <div class="mt-4">
+                            <label for="size-4" class="block text-sm font-medium text-gray-700">Size:</label>
+                            <select id="size-4" class="mt-1 block w-full pl-3 pr-10 py-2 border-gray-300 rounded-md">
+                                <option>Standard (52" W x 84" L)</option><option>Long (52" W x 96" L)</option><option>Extra-Long (52" W x 108" L)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button class="add-to-cart-btn mt-4 w-full bg-primary text-white py-2 rounded-md hover:bg-opacity-90 font-semibold transition-colors">Add to Cart</button>
+                </div>
+
+                <div class="product-card bg-gray-100 p-4 rounded-lg transform transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
+                     data-product-name="Classic Velvet Curtain" data-product-price="1299">
+                    <div>
+                        <div class="h-64 rounded-lg mb-4 overflow-hidden">
+                            <img src="ctdsgn8.jpg" alt="Classic Velvet Curtain" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
+                        </div>
+                        <h3 class="font-medium mb-2">Classic Velvet Curtain</h3>
+                        <p class="text-gray-600 mb-2 text-sm flex-grow">Luxurious velvet fabric that adds warmth and elegance to any room.</p>
+                        <div class="flex justify-between items-center mt-2">
+                            <span class="font-bold text-lg">₱ 1,299</span>
+                            <div class="flex items-center"><span>4.9</span><i class="fas fa-star text-yellow-400 ml-1"></i></div>
+                        </div>
+                        <div class="mt-4">
+                            <label for="size-5" class="block text-sm font-medium text-gray-700">Size:</label>
+                            <select id="size-5" class="mt-1 block w-full pl-3 pr-10 py-2 border-gray-300 rounded-md">
+                                <option>Standard (52" W x 84" L)</option><option>Long (52" W x 96" L)</option><option>Extra-Long (52" W x 108" L)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button class="add-to-cart-btn mt-4 w-full bg-primary text-white py-2 rounded-md hover:bg-opacity-90 font-semibold transition-colors">Add to Cart</button>
+                </div>
+
+                <div class="product-card bg-gray-100 p-4 rounded-lg transform transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
+                     data-product-name="Rustic Linen Curtain" data-product-price="1350">
+                    <div>
+                        <div class="h-64 rounded-lg mb-4 overflow-hidden">
+                            <img src="ctdsgn9.jpg" alt="Rustic Linen Curtain" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
+                        </div>
+                        <h3 class="font-medium mb-2">Rustic Linen Curtain</h3>
+                        <p class="text-gray-600 mb-2 text-sm flex-grow">Natural linen fabric that brings a rustic charm to your home.</p>
+                        <div class="flex justify-between items-center mt-2">
+                            <span class="font-bold text-lg">₱ 1,350</span>
+                            <div class="flex items-center"><span>4.6</span><i class="fas fa-star text-yellow-400 ml-1"></i></div>
+                        </div>
+                        <div class="mt-4">
+                            <label for="size-6" class="block text-sm font-medium text-gray-700">Size:</label>
+                            <select id="size-6" class="mt-1 block w-full pl-3 pr-10 py-2 border-gray-300 rounded-md">
+                                <option>Standard (52" W x 84" L)</option><option>Long (52" W x 96" L)</option><option>Extra-Long (52" W x 108" L)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button class="add-to-cart-btn mt-4 w-full bg-primary text-white py-2 rounded-md hover:bg-opacity-90 font-semibold transition-colors">Add to Cart</button>
+                </div>
+
+                <div class="product-card bg-gray-100 p-4 rounded-lg transform transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
+                     data-product-name="Bohemian Print Curtain" data-product-price="1450">
+                    <div>
+                        <div class="h-64 rounded-lg mb-4 overflow-hidden">
+                            <img src="ctdsgn10.jpg" alt="Bohemian Print Curtain" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
+                        </div>
+                        <h3 class="font-medium mb-2">Bohemian Print Curtain</h3>
+                        <p class="text-gray-600 mb-2 text-sm flex-grow">A vibrant bohemian print that adds a pop of color to your space.</p>
+                        <div class="flex justify-between items-center mt-2">
+                            <span class="font-bold text-lg">₱ 1,450</span>
+                            <div class="flex items-center"><span>4.4</span><i class="fas fa-star text-yellow-400 ml-1"></i></div>
+                        </div>
+                        <div class="mt-4">
+                            <label for="size-7" class="block text-sm font-medium text-gray-700">Size:</label>
+                            <select id="size-7" class="mt-1 block w-full pl-3 pr-10 py-2 border-gray-300 rounded-md">
+                                <option>Standard (52" W x 84" L)</option><option>Long (52" W x 96" L)</option><option>Extra-Long (52" W x 108" L)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button class="add-to-cart-btn mt-4 w-full bg-primary text-white py-2 rounded-md hover:bg-opacity-90 font-semibold transition-colors">Add to Cart</button>
+                </div>
+
+                <div class="product-card bg-gray-100 p-4 rounded-lg transform transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
+                     data-product-name="Coastal Stripe Curtain" data-product-price="1350">
+                    <div>
+                        <div class="h-64 rounded-lg mb-4 overflow-hidden">
+                            <img src="ctdsgn11.jpg" alt="Coastal Stripe Curtain" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
+                        </div>
+                        <h3 class="font-medium mb-2">Coastal Stripe Curtain</h3>
+                        <p class="text-gray-600 mb-2 text-sm flex-grow">A fresh coastal stripe design perfect for beach houses.</p>
+                        <div class="flex justify-between items-center mt-2">
+                            <span class="font-bold text-lg">₱ 1,350</span>
+                            <div class="flex items-center"><span>4.8</span><i class="fas fa-star text-yellow-400 ml-1"></i></div>
+                        </div>
+                        <div class="mt-4">
+                            <label for="size-8" class="block text-sm font-medium text-gray-700">Size:</label>
+                            <select id="size-8" class="mt-1 block w-full pl-3 pr-10 py-2 border-gray-300 rounded-md">
+                                <option>Standard (52" W x 84" L)</option><option>Long (52" W x 96" L)</option><option>Extra-Long (52" W x 108" L)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button class="add-to-cart-btn mt-4 w-full bg-primary text-white py-2 rounded-md hover:bg-opacity-90 font-semibold transition-colors">Add to Cart</button>
+                </div>
+
+                <div class="product-card bg-gray-100 p-4 rounded-lg transform transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
+                     data-product-name="Artistic Abstract Curtain" data-product-price="1150">
+                    <div>
+                        <div class="h-64 rounded-lg mb-4 overflow-hidden">
+                            <img src="ctdsgn12.jpg" alt="Artistic Abstract Curtain" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
+                        </div>
+                        <h3 class="font-medium mb-2">Artistic Abstract Curtain</h3>
+                        <p class="text-gray-600 mb-2 text-sm flex-grow">An artistic abstract design that makes a bold statement.</p>
+                        <div class="flex justify-between items-center mt-2">
+                            <span class="font-bold text-lg">₱ 1,150</span>
+                            <div class="flex items-center"><span>4.3</span><i class="fas fa-star text-yellow-400 ml-1"></i></div>
+                        </div>
+                        <div class="mt-4">
+                            <label for="size-9" class="block text-sm font-medium text-gray-700">Size:</label>
+                            <select id="size-9" class="mt-1 block w-full pl-3 pr-10 py-2 border-gray-300 rounded-md">
+                                <option>Standard (52" W x 84" L)</option><option>Long (52" W x 96" L)</option><option>Extra-Long (52" W x 108" L)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button class="add-to-cart-btn mt-4 w-full bg-primary text-white py-2 rounded-md hover:bg-opacity-90 font-semibold transition-colors">Add to Cart</button>
+                </div>
+
+                <div class="product-card bg-gray-100 p-4 rounded-lg transform transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
+                     data-product-name="Vintage Floral Curtain" data-product-price="1420">
+                    <div>
+                        <div class="h-64 rounded-lg mb-4 overflow-hidden">
+                            <img src="ctdsgn13.jpg" alt="Vintage Floral Curtain" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
+                        </div>
+                        <h3 class="font-medium mb-2">Vintage Floral Curtain</h3>
+                        <p class="text-gray-600 mb-2 text-sm flex-grow">A charming vintage floral pattern that adds elegance to any room.</p>
+                        <div class="flex justify-between items-center mt-2">
+                            <span class="font-bold text-lg">₱ 1,420</span>
+                            <div class="flex items-center"><span>4.5</span><i class="fas fa-star text-yellow-400 ml-1"></i></div>
+                        </div>
+                        <div class="mt-4">
+                            <label for="size-10" class="block text-sm font-medium text-gray-700">Size:</label>
+                            <select id="size-10" class="mt-1 block w-full pl-3 pr-10 py-2 border-gray-300 rounded-md">
+                                <option>Standard (52" W x 84" L)</option><option>Long (52" W x 96" L)</option><option>Extra-Long (52" W x 108" L)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button class="add-to-cart-btn mt-4 w-full bg-primary text-white py-2 rounded-md hover:bg-opacity-90 font-semibold transition-colors">Add to Cart</button>
+                </div>
+
+                <div class="product-card bg-gray-100 p-4 rounded-lg transform transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
+                     data-product-name="Classic Striped Curtain" data-product-price="1399">
+                    <div>
+                        <div class="h-64 rounded-lg mb-4 overflow-hidden">
+                            <img src="ctdsgn14.jpg" alt="Classic Striped Curtain" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
+                        </div>
+                        <h3 class="font-medium mb-2">Classic Striped Curtain</h3>
+                        <p class="text-gray-600 mb-2 text-sm flex-grow">Timeless stripes that bring a classic touch to your decor.</p>
+                        <div class="flex justify-between items-center mt-2">
+                            <span class="font-bold text-lg">₱ 1,399</span>
+                            <div class="flex items-center"><span>4.6</span><i class="fas fa-star text-yellow-400 ml-1"></i></div>
+                        </div>
+                        <div class="mt-4">
+                            <label for="size-11" class="block text-sm font-medium text-gray-700">Size:</label>
+                            <select id="size-11" class="mt-1 block w-full pl-3 pr-10 py-2 border-gray-300 rounded-md">
+                                <option>Standard (52" W x 84" L)</option><option>Long (52" W x 96" L)</option><option>Extra-Long (52" W x 108" L)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button class="add-to-cart-btn mt-4 w-full bg-primary text-white py-2 rounded-md hover:bg-opacity-90 font-semibold transition-colors">Add to Cart</button>
+                </div>
+
+                <div class="product-card bg-gray-100 p-4 rounded-lg transform transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
+                     data-product-name="Elegant Lace Curtain" data-product-price="1320">
+                    <div>
+                        <div class="h-64 rounded-lg mb-4 overflow-hidden">
+                            <img src="ctdsgn15.jpg" alt="Elegant Lace Curtain" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
+                        </div>
+                        <h3 class="font-medium mb-2">Elegant Lace Curtain</h3>
+                        <p class="text-gray-600 mb-2 text-sm flex-grow">Delicate lace that adds a touch of sophistication to your windows.</p>
+                        <div class="flex justify-between items-center mt-2">
+                            <span class="font-bold text-lg">₱ 1,320</span>
+                            <div class="flex items-center"><span>4.9</span><i class="fas fa-star text-yellow-400 ml-1"></i></div>
+                        </div>
+                        <div class="mt-4">
+                            <label for="size-12" class="block text-sm font-medium text-gray-700">Size:</label>
+                            <select id="size-12" class="mt-1 block w-full pl-3 pr-10 py-2 border-gray-300 rounded-md">
+                                <option>Standard (52" W x 84" L)</option><option>Long (52" W x 96" L)</option><option>Extra-Long (52" W x 108" L)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button class="add-to-cart-btn mt-4 w-full bg-primary text-white py-2 rounded-md hover:bg-opacity-90 font-semibold transition-colors">Add to Cart</button>
+                </div>
+
+                <div class="product-card bg-gray-100 p-4 rounded-lg transform transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
+                     data-product-name="Contemporary Solid Curtain" data-product-price="1320">
+                    <div>
+                        <div class="h-64 rounded-lg mb-4 overflow-hidden">
+                            <img src="ctdsgn16.jpg" alt="Contemporary Solid Curtain" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
+                        </div>
+                        <h3 class="font-medium mb-2">Contemporary Solid Curtain</h3>
+                        <p class="text-gray-600 mb-2 text-sm flex-grow">A solid color curtain that complements any modern interior.</p>
+                        <div class="flex justify-between items-center mt-2">
+                            <span class="font-bold text-lg">₱ 1,320</span>
+                            <div class="flex items-center"><span>4.7</span><i class="fas fa-star text-yellow-400 ml-1"></i></div>
+                        </div>
+                        <div class="mt-4">
+                            <label for="size-13" class="block text-sm font-medium text-gray-700">Size:</label>
+                            <select id="size-13" class="mt-1 block w-full pl-3 pr-10 py-2 border-gray-300 rounded-md">
+                                <option>Standard (52" W x 84" L)</option><option>Long (52" W x 96" L)</option><option>Extra-Long (52" W x 108" L)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button class="add-to-cart-btn mt-4 w-full bg-primary text-white py-2 rounded-md hover:bg-opacity-90 font-semibold transition-colors">Add to Cart</button>
+                </div>
+            </div>
+
+            <div class="text-center mt-12">
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-primary text-white py-12">
+        <div class="container mx-auto px-6 md:px-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="font-playfair text-xl font-bold mb-4">World Class Curtain</h3>
+                    <p class="text-gray-300">Elevate your space with our premium collection of curtains designed for modern living.</p>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-300 hover:text-white">Home</a></li>
+                        <li><a href="seemore.html" class="text-gray-300 hover:text-white">More</a></li>
+                        <li><a href="accesories.html" class="text-gray-300 hover:text-white">Accessories</a></li>
+                        <li><a href="contact.html" class="text-gray-300 hover:text-white">Contact</a></li>
+                        <li><a href="developers.html" class="text-gray-300 hover:text-white">Developers</a></li>
+                        <li><a href="developers.html" class="text-gray-300 hover:text-white">Research</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-300">
+                <p>&copy; 2025 World Class Curtain. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script type="module">
+        const supabase = window.supabase;
+
+        // --- DOM Selectors ---
+        const authLinksContainer = document.getElementById('auth-links');
+        const mobileAuthLinksContainer = document.getElementById('mobile-auth-links');
+        const cartItemCount = document.getElementById('cart-item-count');
+        const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
+
+        // --- Authentication ---
+        async function checkUserSession() {
+            const { data: { session } } = await supabase.auth.getSession();
+            updateUIAfterAuth(session);
+            updateCartCount(session); // Update cart count on load
+        }
+
+        function updateUIAfterAuth(session) {
+            authLinksContainer.innerHTML = ''; 
+            mobileAuthLinksContainer.innerHTML = '';
+
+            if (session && session.user) {
+                // User is logged in: Show Profile/Sign Out
+                const desktopLinks = `<a href="profile.html" class="hover:text-primary font-semibold">PROFILE</a><button id="signout-btn" class="hover:text-primary font-semibold">SIGN OUT</button>`;
+                const mobileLinks = `<a href="profile.html" class="block hover:text-primary py-2">PROFILE</a><button id="mobile-signout-btn" class="block hover:text-primary py-2 w-full text-left">SIGN OUT</button>`;
+                
+                authLinksContainer.innerHTML = desktopLinks;
+                mobileAuthLinksContainer.innerHTML = mobileLinks;
+                
+                document.getElementById('signout-btn').addEventListener('click', handleSignOut);
+                document.getElementById('mobile-signout-btn').addEventListener('click', handleSignOut);
+            } else {
+                // User is not logged in: Show Sign In
+                const desktopLinks = `<a href="login.html" class="hover:text-primary font-semibold">SIGN IN</a>`;
+                const mobileLinks = `<a href="login.html" class="block hover:text-primary py-2">SIGN IN</a>`;
+                authLinksContainer.innerHTML = desktopLinks;
+                mobileAuthLinksContainer.innerHTML = mobileLinks;
+            }
+        }
+
+        async function handleSignOut() {
+            await supabase.auth.signOut();
+            window.location.reload();
+        }
+        
+        // --- Cart Logic ---
+        async function updateCartCount(session) {
+            if (!session) {
+                cartItemCount.textContent = '0';
+                return;
+            }
+            const { count, error } = await supabase
+                .from('cart')
+                .select('*', { count: 'exact', head: true })
+                .eq('user_id', session.user.id);
+            
+            cartItemCount.textContent = error ? '0' : (count || '0');
+        }
+
+        async function handleAddToCart(event) {
+            const { data: { session } } = await supabase.auth.getSession();
+            if (!session) {
+                alert('Please sign in to add items to your cart.');
+                window.location.href = 'login.html'; 
+                return;
+            }
+
+            const productCard = event.target.closest('.product-card');
+            const selectElement = productCard.querySelector('select');
+
+            const cartItem = {
+                user_id: session.user.id,
+                product_name: productCard.dataset.productName,
+                size: selectElement ? selectElement.value : 'N/A', // Check if select exists
+                price: parseFloat(productCard.dataset.productPrice),
+                quantity: 1
+            };
+
+            const { error } = await supabase.from('cart').insert([cartItem]);
+            if (error) {
+                console.error('Cart insertion error:', error);
+                alert('Sorry, there was an error adding the item to the cart.');
+            } else {
+                alert(`'${cartItem.product_name}' has been added to your cart!`);
+                updateCartCount(session);
+            }
+        }
+
+        // --- Event Listeners ---
+        document.addEventListener('DOMContentLoaded', checkUserSession);
+        // Attach the handler to all 'Add to Cart' buttons
+        addToCartButtons.forEach(button => button.addEventListener('click', handleAddToCart));
+    </script>
+</body>
+</html>
